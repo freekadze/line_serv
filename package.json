@@ -1,0 +1,15 @@
+{
+  "name": "line-bot",
+  "version": "1.0.0",
+  "description": "A simple Line Bot built with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@line/bot-sdk": "^7.7.0",
+    "express": "^4.21.2"
+  }
+}
