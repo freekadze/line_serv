@@ -3,8 +3,8 @@ const line = require('@line/bot-sdk');
 
 // 請將以下兩個參數替換成您從 LINE Developers 平台取得的值
 const config = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || 'YOUR_CHANNEL_ACCESS_TOKEN',
-  channelSecret: process.env.CHANNEL_SECRET || 'YOUR_CHANNEL_SECRET'
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || 'JVTDoyRsx/uSuO4DyyYcw8OUg6UX5pUQENypv/Y2xrys8E/LxZ71miSQlpuaA3YE/i/jPwHPisg0p869cMl8THcgzO4C2UXFFuBsLNB2BIa8QFIAEsSiNDTxt0pNudTgLKat6K2e9ci90x+LcMRzlgdB04t89/1O/w1cDnyilFU=',
+  channelSecret: process.env.CHANNEL_SECRET || '8fa160b22c30173b529b88b2c49b0067'
 };
 
 const client = new line.Client(config);
@@ -39,7 +39,7 @@ function handleEvent(event) {
         contents: [
           {
             type: 'text',
-            text: '歡迎使用 Line Bot!',
+            text: '歡迎使用 TasKo分帳',
             weight: 'bold',
             size: 'xl'
           }
