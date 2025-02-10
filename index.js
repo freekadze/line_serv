@@ -55,7 +55,7 @@ function handleEvent(event) {
             style: 'primary',
             action: {
               type: 'uri',
-              label: '前往網站',
+              label: '新增記錄',
               uri: 'https://ledger-sqlite.onrender.com'
             }
           }
