@@ -11,83 +11,9 @@ from linebot.models import FlexSendMessage
 
 app = Flask(__name__)
 
-url_out='https://99fe-2403-c300-c903-70a4-6bfb-22bb-b325-d314.ngrok-free.app'
-trade_num=''
-trade_order=''
-trade_sell_hex=''
-#url_out=get_ngrok_url()
-
-canvas_color = '#fffafa'
-line_color = '#c8ced1'
-font_color = '#171510'
-colorup = '#bf0000'
-colordown = '#0d9101'
-
-
-#########################################
-'''
-def get_ngrok_url():
-    url = "http://localhost:4040/api/tunnels"
-    res = requests.get(url)
-    res_unicode = res.content.decode("utf-8")
-    res_json = json.loads(res_unicode)
-    for i in range(len(res_json)):
-        if(res_json["tunnels"][i]["proto"]=='https'):
-            return res_json["tunnels"][i]["public_url"]
-            break
-            
-url_out=get_ngrok_url()
-'''
-list_stock_user=['U2b12c5d1919feab6eaa7e9c94a50a113','Uda5dff485f350f2f4b6a7deb3c93c5a2']
-
-postback_hex=''
-check_hex=''
-
-line_bot_api = LineBotApi('+EDyb8hkvT3qCz32f4CYSGLxJyOBvAb3ctdTHxJUWM5tMixeZH8b9TV9uXjhxs+wzcdBhHPUNc+k6D0Vf2Pv9ah5tdR864pzD3xGamfKaVgobSoLlEAqY0DqxQegNPdy/rxYNGKmDGZICLX9O+3BpwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler("ac4e044ffb47baeaeef095785f348f6c")
-genai.configure(api_key='AIzaSyDYKqrTZKsa9_CixwLaSS-rsVC_FD2V--Y')
-      
-list_hsm_user=['U20d461d043da1a849626e06711c327f3']
-list_c_user=['U20d461d043da1a849626e06711c327f3']
-list_mt4_user=['U20d461d043da1a849626e06711c327f3']
-list_a32_user=['U20d461d043da1a849626e06711c327f3']
-
-def notify(request):
-    pattern = 'code=.*&'
-
-    raw_uri = request.get_raw_uri()
-
-    codes = re.findall(pattern,raw_uri)
-    for code in codes:
-        code = code[5:-1]
-        print(code)
-
-    #抓取user的notify token
-    user_notify_token_get_url = 'https://notify-bot.line.me/oauth/token'
-    params = {
-        'grant_type':'authorization_code',
-        'code':code,
-        'redirect_uri':'https://eb2614c8d58c.ngrok.io/notify',#這邊改成自己的https://ngrok domain/notify
-        'client_id':'ibT0c6xbuGOsWlHofoKZrU',#這邊改成自己的Notify client_id
-        'client_secret':'PMIBpMHjvZvaf7HZz6CsoEnAGTQYOlSIlBkICPiZVkV' #這邊改成自己的Notify client_secret
-
-    }
-    get_token = requests.post(user_notify_token_get_url,params=params)
-    print(get_token.json())
-    token = get_token.json()['access_token']
-    print(token)
-
-    #抓取user的info
-    user_info_url = 'https://notify-api.line.me/api/status'
-    headers = {'Authorization':'Bearer '+token}
-    get_user_info = requests.get(user_info_url,headers=headers)
-    print(get_user_info.json())
-    notify_user_info = get_user_info.json()
-    if notify_user_info['targetType']=='USER':
-        User_Info.objects.filter(name=notify_user_info['target']).update(notify=token)
-    elif notify_user_info['targetType']=='GROUP':
-        pass
-    return HttpResponse()
+line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
+handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
+genai.configure(api_key=os.environ.get("api_key"))
 
 @app.route("/", methods=["GET", "POST"])
 def callback():
@@ -167,7 +93,6 @@ if __name__ == '__main__':
     app.run('127.0.0.1', 5000)
 
 
-# In[ ]:
 
 
 
