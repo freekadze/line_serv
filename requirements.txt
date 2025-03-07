@@ -2,5 +2,4 @@ flask
 line-bot-sdk
 gunicorn
 gevent
-geventwebsocket
 google-generativeai
