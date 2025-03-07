@@ -36,7 +36,7 @@ def handle_message(event):
 
     try:
         prompt = mtext
-        genai.configure(api_key="AIzaSyDYKqrTZKsa9_CixwLaSS-rsVC_FD2V--Y")
+        genai.configure(api_key=os.environ.get("api_key"))
         model = genai.GenerativeModel("gemini-2.0-flash-exp")
         response = model.generate_content('我會輸入一段內容，內容可能是一個句子、或一個單字，請先理解內容後再將我提供的內容翻譯成繁體中文。回答內容請盡量口語化且符合語境，但仍保留意思。回答內容包含翻譯後的文本，不需要額外的文字。請翻譯以下段落資料：{'+prompt+'}')
         reply = TextSendMessage(text=response.text)
