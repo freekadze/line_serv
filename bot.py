@@ -15,32 +15,6 @@ line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 genai.configure(api_key=os.environ.get("api_key"))
 
-@app.route("/", methods=["GET", "POST"])
-def callback():
-    if request.method == "GET":
-        s='''功能如下:
-            傳送位置可知道該地天氣
-            星座:當日星座運勢
-            油價:中油油價
-            asis:asis程控
-            resethsm: 重開熱軋首頁
-            銷售進度:銷售進度
-            新聞:最新新聞'''
-        return "<H2>Welcome to Line Bot !!</H2>指令如下:"+s
-        #return redirect("http://bot4ko.site/static/.well-known/acme-challenge/TSjOiUk_UFOvKnHi79t9GSoIiojdCbWbg3hB8j_kr5g", code=302)
-        #return "<a href='./static/.well-known/acme-challenge/TSjOiUk_UFOvKnHi79t9GSoIiojdCbWbg3hB8j_kr5g' target='_blank'>TSjOiUk_UFOvKnHi79t9GSoIiojdCbWbg3hB8j_kr5g</a>"
-
-    if request.method == "POST":
-        signature = request.headers["X-Line-Signature"]
-        body = request.get_data(as_text=True)
-
-        try:
-            handler.handle(body, signature)
-        except InvalidSignatureError:
-            abort(400)
-
-        return "OK"
-
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
