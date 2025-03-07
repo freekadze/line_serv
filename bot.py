@@ -1,11 +1,8 @@
 from flask import Flask, send_file, abort, request,render_template,redirect,send_from_directory
 #from gevent.pywsgi import WSGIServer
 from gevent import pywsgi
-from geventwebsocket.handler import WebSocketHandler
-
 import google.generativeai as genai
 
-import os
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
