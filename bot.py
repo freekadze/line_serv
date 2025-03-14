@@ -52,7 +52,9 @@ def handle_message(event):
                 files = {"file": (uid+".mp4", file, "audio/mpeg")}
                 response = requests.post(url, files=files)
                 print(json.loads(response.text)["result"])
-
+    except:
+        reply = TextSendMessage(text=f"voice err")
+        line_bot_api.reply_message(event.reply_token, reply)
             
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
