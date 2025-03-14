@@ -27,8 +27,7 @@ def send_message_to_telegram_do_thread(message):
 
 def notify_startup():
     message = "render 伺服器已啟動！"
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    requests.post(url, data={"chat_id": CHAT_ID, "text": message})
+    send_message_to_telegram(message)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
