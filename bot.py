@@ -51,7 +51,9 @@ def handle_message(event):
             with open(uid+".mp4", "rb") as file:
                 files = {"file": (uid+".mp4", file, "audio/mpeg")}
                 response = requests.post(url, files=files)
-                print(json.loads(response.text)["result"])
+                #print(json.loads(response.text)["result"])
+                reply = TextSendMessage(text=json.loads(response.text)["result"])
+                line_bot_api.reply_message(event.reply_token, reply)
     except:
         reply = TextSendMessage(text=f"voice err")
         line_bot_api.reply_message(event.reply_token, reply)
