@@ -8,14 +8,35 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from linebot.models import FlexSendMessage
 import requests
+import threading
 import json
 from pydub import AudioSegment
 
 app = Flask(__name__)
 
+def send_message_to_telegram(message):
+    t = threading.Thread(target=send_message_to_telegram_do_thread, args=(message,)) # 建立執行緒
+    t.start()  # 執行
+def send_message_to_telegram_do_thread(message):
+    try:
+        my_params = {'message': message}        
+        r = requests.get(
+        'https://script.google.com/macros/s/AKfycbz1uZoyh3M0DFV94_rlrLjMd17dGdkJg8QT7lKOhDWD5bttShx7ZhTEKcGK_gODhfB-VA/exec', params=my_params)
+    except:
+        print("telegram err")
+
+def notify_startup():
+    message = "render 伺服器已啟動！"
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    requests.post(url, data={"chat_id": CHAT_ID, "text": message})
+
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 genai.configure(api_key=os.environ.get("api_key"))
+
+@app.before_first_request
+def startup():
+    notify_startup()
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -106,6 +127,7 @@ def run(MULTI_PROCESS):
 #server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
 #server.serve_forever()
 if __name__ == '__main__':
+    notify_startup()
     app.run('127.0.0.1', 5000)
 
 
