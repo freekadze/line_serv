@@ -7,7 +7,9 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from linebot.models import FlexSendMessage
-
+import requests
+import json
+from pydub import AudioSegment
 
 app = Flask(__name__)
 
@@ -26,7 +28,32 @@ def callback():
         abort(400)
 
     return 'OK'
-        
+
+
+@handler.add(MessageEvent, message=AudioMessage)
+def handle_message(event):
+    global change_voice_flag,show_voice_flag
+    try:
+        uid = event.source.user_id
+        UserSendAudio = line_bot_api.get_message_content(event.message.id)
+        path = './static/audio/acc/'+uid+'.mp4'
+        with open(path, 'wb') as fd:
+            for chunk in UserSendAudio.iter_content():
+                fd.write(chunk)
+        if AudioSegment.from_file('./'+uid+'.mp4', format="mp4").duration_seconds < 300:
+            userId=uid
+            apiUrl = "https://api.tasko.uk/set_CAPTCHA_BY_UUID/" + uid;
+            response = requests.get(apiUrl)
+            s = response.text
+            d = json.loads(s)
+            url = "https://api.tasko.uk/upload-audio/testid/"+d["message"]
+            
+            with open(uid+".mp4", "rb") as file:
+                files = {"file": (uid+".mp4", file, "audio/mpeg")}
+                response = requests.post(url, files=files)
+                print(json.loads(response.text)["result"])
+
+            
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
