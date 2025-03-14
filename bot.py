@@ -33,10 +33,6 @@ line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 genai.configure(api_key=os.environ.get("api_key"))
 
-@app.before_first_request
-def startup():
-    notify_startup()
-
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
