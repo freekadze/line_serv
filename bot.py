@@ -36,7 +36,7 @@ def handle_message(event):
     try:
         uid = event.source.user_id
         UserSendAudio = line_bot_api.get_message_content(event.message.id)
-        path = './static/audio/acc/'+uid+'.mp4'
+        path = './'+uid+'.mp4'
         with open(path, 'wb') as fd:
             for chunk in UserSendAudio.iter_content():
                 fd.write(chunk)
