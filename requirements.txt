@@ -3,3 +3,4 @@ line-bot-sdk
 gunicorn
 gevent
 google-generativeai
+pydub
