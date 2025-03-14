@@ -54,8 +54,8 @@ def handle_message(event):
                 #print(json.loads(response.text)["result"])
                 reply = TextSendMessage(text=json.loads(response.text)["result"])
                 line_bot_api.reply_message(event.reply_token, reply)
-    except:
-        reply = TextSendMessage(text=f"voice err")
+    except Exception as e:
+        reply = TextSendMessage(text=str(e))
         line_bot_api.reply_message(event.reply_token, reply)
             
 @handler.add(MessageEvent, message=TextMessage)
