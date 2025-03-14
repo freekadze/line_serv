@@ -46,7 +46,7 @@ def handle_message(event):
             response = requests.get(apiUrl)
             s = response.text
             d = json.loads(s)
-            url = "https://api.tasko.uk/upload-audio/testid/"+d["message"]
+            url = "https://api.tasko.uk/upload-audio/"+uid+"/"+d["message"]
             
             with open(uid+".mp4", "rb") as file:
                 files = {"file": (uid+".mp4", file, "audio/mpeg")}
