@@ -33,6 +33,12 @@ line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 genai.configure(api_key=os.environ.get("api_key"))
 
+# 新增首頁路由
+@app.route('/')
+def index():
+    notify_startup()
+    return "line程式已啟動"  
+    
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -122,7 +128,7 @@ def run(MULTI_PROCESS):
 #server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
 #server.serve_forever()
 if __name__ == '__main__':
-    notify_startup()
+    
     app.run('127.0.0.1', 5000)
 
 
