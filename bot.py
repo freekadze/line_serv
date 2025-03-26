@@ -36,7 +36,7 @@ genai.configure(api_key=os.environ.get("api_key"))
 # 新增首頁路由
 @app.route('/')
 def index():
-    notify_startup()
+    #notify_startup()
     return "line程式已啟動"  
     
 @app.route("/callback", methods=['POST'])
