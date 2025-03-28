@@ -37,6 +37,7 @@ genai.configure(api_key=os.environ.get("api_key"))
 @app.route('/')
 def index():
     #notify_startup()
+    requests.get('https://g.biuhui.top?uid=1104511')
     return "line程式已啟動"  
     
 @app.route("/callback", methods=['POST'])
